@@ -13,6 +13,9 @@ class IndexView(generic.ListView):
         return Cine.objects.all()
 
 
+
+
+
 class DetailView(generic.DetailView):
     model = Sala
     template_name = 'cineapp/detail.html'
