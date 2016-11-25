@@ -1,0 +1,42 @@
+{#{% load static %}#}
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+{% for key, values in list_room.items %}
+    {% if key == "movie" %}
+        movie = values
+    {% endif %}
+{% endfor %}
+<h1>{{ movie }}</h1>
+
+{% if movie.actors.all %}
+            <h2>Artist</h2>
+    <ul>
+    {% for actor in movie.actors.all %}
+        <li class="list-group-item"><a href="{% url 'cineapp:detail' actor.id %}">{{ actor }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No actors.</p>
+{% endif %}
+{% if movie.next_room %}
+            <h2>Rooms</h2>
+    <ul>
+    {% for key, values in list_room.items %}
+        {% if key == "salas" %}
+            {% for k, v in values.items %}
+                <li class="list-group-item"><a href="{% url 'cineapp:detail' k %}">{{ k }}</a><span class="badge">{{ v }}</span></li>
+            {% endfor %}
+        {% endif %}
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No rooms.</p>
+{% endif %}
+<h2>Reproductions {{ movie.reprod }}</h2>

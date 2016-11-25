@@ -1,0 +1,26 @@
+{% load static %}
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+
+{% if cine_list %}
+    <ul>
+    {% for cine in cine_list %}
+        <li class="list-group-item"><a href="{% url 'cineapp:detail' cine.id %}">{{ cine }}</a><span class="badge">{{ cine.sala_set.count }}</span></li>
+        <h2>Salas</h2>
+        <ul>
+            {% for sala in cine.sala_set.all %}
+                <li class="list-group-item"><a href="{% url 'cineapp:detail' sala.id %}">{{ sala }}</a><span class="badge">{% if sala.is_playing_movie %} active {% else %} inactive {% endif %}</span></li>
+            {% endfor %}
+        </ul>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No polls are available.</p>
+{% endif %}
