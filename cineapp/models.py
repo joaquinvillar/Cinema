@@ -10,7 +10,7 @@ import json
 class Cine(models.Model):
     name = models.CharField(max_length=200)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
 
@@ -18,7 +18,7 @@ class Actor(models.Model):
     name = models.CharField(max_length=200)
     birth = models.DateTimeField('date published')
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
 
@@ -28,7 +28,7 @@ class MovieSala(models.Model):
     begin = models.DateTimeField('Begining')
     end = models.DateTimeField('End')
 
-    def __unicode__(self):
+    def __str__(self):
         return "%s - %s" % (self.movie, self.sala)
 
 
@@ -37,7 +37,7 @@ class MovieActors(models.Model):
     movie = models.ForeignKey("Movie", on_delete=models.CASCADE)
     actor = models.ForeignKey("Actor", on_delete=models.CASCADE)
 
-    def __unicode__(self):
+    def __str__(self):
         return "%s - %s" % (self.movie, self.actor)
 
 
@@ -45,7 +45,7 @@ class Movie(models.Model):
     name = models.CharField(max_length=200)
     actors = models.ManyToManyField(Actor, through=MovieActors)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
     def next_room(self):
@@ -64,7 +64,6 @@ class Movie(models.Model):
             sum = datetime.timedelta()
             for room in roomlist:
                 sum += room.end-room.begin
-                print room.end-room.begin
             data[roo.sala_id] = str(sum)
         json_data = json.dumps(data)
         return json_data
@@ -76,7 +75,7 @@ class Sala(models.Model):
     cine = models.ForeignKey(Cine, on_delete=models.CASCADE)
     movie = models.ManyToManyField(Movie, through=MovieSala)
 
-    def __unicode__(self):
+    def __str__(self):
         return "%s" % self.number
 
     def is_playing_movie(self):
