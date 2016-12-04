@@ -2,14 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="84d6d72a-29ca-4dae-a34e-0805be0a5acf" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/templates/cineapp/upload.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cineapp/models.py" afterPath="$PROJECT_DIR$/cineapp/models.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cineapp/urls.py" afterPath="$PROJECT_DIR$/cineapp/urls.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cineapp/views.py" afterPath="$PROJECT_DIR$/cineapp/views.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db.sqlite3" afterPath="$PROJECT_DIR$/db.sqlite3" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/cineapp/index.html" afterPath="$PROJECT_DIR$/templates/cineapp/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/cineapp/sign.html" afterPath="$PROJECT_DIR$/templates/cineapp/sign.html" />
     </list>
     <ignored path="cine.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -576,7 +569,14 @@
       <option name="project" value="LOCAL" />
       <updated>1480295115412</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Making log in">
+      <created>1480878756134</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1480878756134</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TodoView">
