@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 import datetime
 # Create your views here.
 from django.views.generic import View
@@ -7,6 +7,78 @@ from django.views import generic
 from .models import Cine, Sala, MovieSala, Movie, MovieActors
 from django.contrib.auth import authenticate, login, logout, settings
 from django.http import HttpResponse, HttpResponseRedirect
+from django.contrib.auth import authenticate, login, logout
+from .forms import SignForm, UploadFileForm, DocumentForm
+from django.contrib.auth.decorators import login_required
+
+
+def model_form_upload(request):
+    if request.method == 'POST':
+        form = DocumentForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return render(request, 'cineapp/index.html')
+    else:
+        form = DocumentForm()
+    return render(request, 'cineapp/upload.html', {
+        'form': form
+    })
+
+
+def handle_uploaded_file(f):
+    with open('some/file/name.txt', 'wb+') as destination:
+        for chunk in f.chunks():
+            destination.write(chunk)
+
+
+def upload_file(request):
+    if request.method == 'POST':
+        form = UploadFileForm(request.POST, request.FILES)
+        if form.is_valid():
+            handle_uploaded_file(request.FILES['file'])
+            return HttpResponseRedirect('/success/url/')
+    else:
+        form = UploadFileForm()
+    return render(request, 'cineapp/upload.html', {'form': form})
+
+
+def logout_view(request):
+    logout(request)
+    return render(request, 'cineapp/index.html')
+
+
+def my_view(request):
+    username = request.POST['username']
+    password = request.POST['password']
+    user = authenticate(username=username, password=password)
+    if user is not None:
+        login(request, user)
+        return render(request, 'cineapp/index.html')
+    else:
+        return render(request, 'cineapp/sign.html')
+
+
+def sig_in(request):
+    # if this is a POST request we need to process the form data
+    if request.method == 'POST':
+        # create a form instance and populate it with data from the request:
+        form = SignForm(request.POST)
+        # check whether it's valid:
+        if form.is_valid():
+            username = form.cleaned_data['your_name']
+            password = form.cleaned_data['your_pass']
+            user = authenticate(username=username, password=password)
+            if user is not None:
+                login(request, user)
+                return render(request, 'cineapp/index.html')
+            else:
+                return render(request, 'cineapp/sign.html')
+
+    # if a GET (or any other method) we'll create a blank form
+    else:
+        form = SignForm()
+
+    return render(request, 'cineapp/sign.html', {'form': form})
 
 
 class IndexView(generic.ListView):
@@ -80,37 +152,37 @@ class DetailViewCinema(generic.View):
         return render(request, self.template_name, {"ret": ret})
 
 
-class Sign(generic.View):
-    template_name = 'cineapp/sign.html'
-
-    def get(self, request):
-        ret = {}
-        return render(request, self.template_name, {"retu": ret})
-
-
-class LoginView(View):
-    def post(self, request):
-        username = request.POST['username']
-        password = request.POST['password']
-        user = authenticate(username=username, password=password)
-
-        if user is not None:
-            if user.is_active:
-                login(request, user)
-
-                return HttpResponseRedirect('/form')
-            else:
-                return HttpResponse("Inactive user.")
-        else:
-            return HttpResponseRedirect(settings.LOGIN_URL)
-
-        return render(request, "index.html")
-
-
-class LogoutView(View):
-    def get(self, request):
-        logout(request)
-        return HttpResponseRedirect(settings.LOGIN_URL)
+# class Sign(generic.View):
+#     template_name = 'cineapp/sign.html'
+#
+#     def get(self):
+#         ret = {}
+#         return render(request, self.template_name, {"retu": ret})
+#
+#
+# class LoginView(View):
+#     def post(self, request):
+#         username = request.POST['username']
+#         password = request.POST['password']
+#         user = authenticate(username=username, password=password)
+#
+#         if user is not None:
+#             if user.is_active:
+#                 login(request, user)
+#
+#                 return HttpResponseRedirect('/form')
+#             else:
+#                 return HttpResponse("Inactive user.")
+#         else:
+#             return HttpResponseRedirect(settings.LOGIN_URL)
+#
+#         return render(request, "index.html")
+#
+#
+# class LogoutView(View):
+#     def get(self, request):
+#         logout(request)
+#         return HttpResponseRedirect(settings.LOGIN_URL)
 
 
 

@@ -63,7 +63,11 @@
                 <li class="active"><a href=".">Home</a></li>
               </ul>
               <ul class="nav navbar-nav">
+                  {% if user.is_authenticated %}
+                <li><a href="{% url 'cineapp:logout' %}">Log out</a></li>
+                  {% else  %}
                 <li><a href="{% url 'cineapp:sign' %}">Sign in</a></li>
+                  {% endif %}
               </ul>
             </div>
           </div>
@@ -144,7 +148,8 @@
 {% endif %}
       <!-- /END THE FEATURETTES -->
 
-
+            <label for="title">Your name: </label>
+            <input id="title" type="text" name="title" maxlength="100" required />
       <!-- FOOTER -->
       <footer>
         <p class="pull-right"><a href="#">Back to top</a></p>
